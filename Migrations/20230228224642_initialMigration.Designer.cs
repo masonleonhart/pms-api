@@ -8,11 +8,11 @@ using api.Models;
 
 #nullable disable
 
-namespace pms_api.Migrations
+namespace api.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230228203424_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230228224642_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,22 @@ namespace pms_api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<string>("name")
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("first_name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("last_name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");
+
+                    b.HasIndex("email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
